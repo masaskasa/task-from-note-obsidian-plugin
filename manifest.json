@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "task-from-note-obsidian-plugin",
+	"name": "Task from Note",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+	"description": "A plugin for Obsidian that uses AI to turn selected text in a note into a task and automatically sends it to TickTick",
+	"author": "masaskasa",
+	"authorUrl": "https://github.com/masaskasa",
+	"isDesktopOnly": true
 }
