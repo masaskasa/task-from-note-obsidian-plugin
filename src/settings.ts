@@ -1,5 +1,8 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
-import TaskFromNotePlugin from "./main";
+import { App, PluginSettingTab, Setting, SecretComponent } from "obsidian";
+import TaskFromNotePlugin from "main";
+
+const DEFAULT_MODEL_NAME = "gpt-4o";
+const DEFAULT_BASE_URL = "https://api.openai.com/v1";
 
 export interface Settings {
 	ticktickAccessToken: string;
@@ -11,8 +14,8 @@ export interface Settings {
 export const DEFAULT_SETTINGS: Settings = {
 	ticktickAccessToken: "",
 	openaiApiKey: "",
-	openaiModel: "gpt-4o",
-	openaiBaseUrl: "https://api.openai.com/v1",
+	openaiModel: DEFAULT_MODEL_NAME,
+	openaiBaseUrl: DEFAULT_BASE_URL,
 };
 
 export class SettingTab extends PluginSettingTab {
@@ -27,20 +30,43 @@ export class SettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 
 		containerEl.empty();
-		containerEl.createEl("h2", { text: "Task From Note Settings" });
 
-		new Setting(containerEl)
+		// Warning banner
+		const warningEl = containerEl.createEl("div", {
+			cls: "task-from-note-settings-warning",
+		});
+		warningEl.createEl("strong", {
+			text: "Note: ",
+		});
+		warningEl.createEl("span", {
+			text: "after changing these settings, use the Obsidian command ",
+		});
+		warningEl.createEl("strong", {
+			text: "Reload app without saving",
+		});
+		warningEl.createEl("span", {
+			text: " to fully apply changes",
+		});
+		containerEl.createEl("br");
+
+		containerEl.createEl("h2", { text: "TickTick Settings" });
+
+		const tokenSetting = new Setting(containerEl)
 			.setName("TickTick Access Token")
-			.setDesc("Paste your TickTick API access token (Bearer)")
-			.addText((text) =>
-				text
-					.setPlaceholder("xxx...")
+			.setDesc("Paste your TickTick API access token")
+			.addComponent((el) =>
+				new SecretComponent(this.app, el)
 					.setValue(this.plugin.settings.ticktickAccessToken)
-					.onChange(async (value) => {
-						this.plugin.settings.ticktickAccessToken = value.trim();
-						await this.plugin.saveSettings();
+					.onChange((value) => {
+						this.plugin.settings.ticktickAccessToken = value;
+						this.plugin.saveSettings();
 					})
 			);
+		tokenSetting.descEl.createEl("br");
+		tokenSetting.descEl.createEl("a", {
+			text: "Video guide: how to get your TickTick API token",
+			href: "https://www.youtube.com/watch?v=4PERyNv8aYE",
+		});
 
 		containerEl.createEl("h2", { text: "Chat Model Settings" });
 
@@ -62,7 +88,7 @@ export class SettingTab extends PluginSettingTab {
 			.setDesc("Change if you using OpenAI‑compatible service")
 			.addText((text) =>
 				text
-					.setPlaceholder("https://api.openai.com/v1")
+					.setPlaceholder(DEFAULT_BASE_URL)
 					.setValue(this.plugin.settings.openaiBaseUrl)
 					.onChange(async (value) => {
 						this.plugin.settings.openaiBaseUrl = value.trim();
@@ -73,13 +99,12 @@ export class SettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("API Key")
 			.setDesc("Enter API key")
-			.addText((text) =>
-				text
-					.setPlaceholder("xxx...")
+			.addComponent((el) =>
+				new SecretComponent(this.app, el)
 					.setValue(this.plugin.settings.openaiApiKey)
-					.onChange(async (value) => {
-						this.plugin.settings.openaiApiKey = value.trim();
-						await this.plugin.saveSettings();
+					.onChange((value) => {
+						this.plugin.settings.openaiApiKey = value;
+						this.plugin.saveSettings();
 					})
 			);
 	}
