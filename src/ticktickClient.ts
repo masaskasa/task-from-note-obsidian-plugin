@@ -23,7 +23,11 @@ export class TickTickClient {
 
 		if (!response.ok) {
 			const text = await response.text();
-			console.error("TickTick API error", response.status, text);
+			console.error(
+				"[TaskFromNote] TickTick API error",
+				response.status,
+				text
+			);
 			throw new Error(`TickTick API error ${response.status}: ${text}`);
 		}
 

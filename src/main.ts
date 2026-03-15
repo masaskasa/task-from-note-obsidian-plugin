@@ -3,10 +3,12 @@ import { DEFAULT_SETTINGS, Settings, SettingTab } from "settings";
 import { registerTaskPlusIcon } from "icons";
 import { CreateTaskFromSelectionCommand } from "commands/createTaskFromSelection";
 import { TickTickClient } from "ticktickClient";
+import { OpenAIClient } from "openaiClient";
 
 export default class TaskFromNotePlugin extends Plugin {
 	settings: Settings;
 	ticktick?: TickTickClient;
+	openai?: OpenAIClient;
 
 	async onload() {
 		console.log("[TaskFromNote] loading plugin");
@@ -21,9 +23,18 @@ export default class TaskFromNotePlugin extends Plugin {
 			);
 		}
 
+		if (this.settings.openaiApiKey) {
+			this.openai = new OpenAIClient(
+				this.settings.openaiModel,
+				this.settings.openaiBaseUrl,
+				this.settings.openaiApiKey
+			);
+		}
+
 		const createTaskCommand = new CreateTaskFromSelectionCommand(
 			this,
-			this.ticktick
+			this.ticktick,
+			this.openai
 		);
 		createTaskCommand.register();
 
