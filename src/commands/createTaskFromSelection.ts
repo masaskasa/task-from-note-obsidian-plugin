@@ -1,4 +1,10 @@
-import { Editor, MarkdownView, Plugin, Notice } from "obsidian";
+import {
+	Editor,
+	MarkdownView,
+	MarkdownFileInfo,
+	Plugin,
+	Notice,
+} from "obsidian";
 import { TickTickClient } from "ticktickClient";
 import { OpenAIClient } from "openaiClient";
 
@@ -13,7 +19,10 @@ export class CreateTaskFromSelectionCommand {
 		this.plugin.addCommand({
 			id: "create-task-from-selection",
 			name: "Create task from selection",
-			editorCallback: (editor: Editor, view: MarkdownView) => {
+			editorCallback: (
+				editor: Editor,
+				view: MarkdownView | MarkdownFileInfo
+			) => {
 				this.run(editor);
 			},
 		});

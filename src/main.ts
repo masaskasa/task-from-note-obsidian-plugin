@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin } from "obsidian";
+import { MarkdownView, Plugin } from "obsidian";
 import { DEFAULT_SETTINGS, Settings, SettingTab } from "settings";
 import { registerTaskPlusIcon } from "icons";
 import { CreateTaskFromSelectionCommand } from "commands/createTaskFromSelection";
@@ -6,7 +6,7 @@ import { TickTickClient } from "ticktickClient";
 import { OpenAIClient } from "openaiClient";
 
 export default class TaskFromNotePlugin extends Plugin {
-	settings: Settings;
+	settings: Settings = DEFAULT_SETTINGS;
 	ticktick?: TickTickClient;
 	openai?: OpenAIClient;
 
@@ -17,17 +17,21 @@ export default class TaskFromNotePlugin extends Plugin {
 
 		this.addSettingTab(new SettingTab(this.app, this));
 
-		if (this.settings.ticktickAccessToken) {
-			this.ticktick = new TickTickClient(
-				this.settings.ticktickAccessToken
-			);
+		const ticktickAccessToken = this.app.secretStorage.getSecret(
+			this.settings.ticktickAccessToken
+		);
+		if (ticktickAccessToken) {
+			this.ticktick = new TickTickClient(ticktickAccessToken);
 		}
 
-		if (this.settings.openaiApiKey) {
+		const openaiApiKey = this.app.secretStorage.getSecret(
+			this.settings.openaiApiKey
+		);
+		if (openaiApiKey) {
 			this.openai = new OpenAIClient(
 				this.settings.openaiModel,
 				this.settings.openaiBaseUrl,
-				this.settings.openaiApiKey
+				openaiApiKey
 			);
 		}
 
