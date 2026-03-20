@@ -47,7 +47,9 @@ For example:
 
 This flow is ideal when you trust the model and want the fastest possible note‑to‑task conversion.
 
-[![Watch the demo video](https://img.youtube.com/vi/82-5Fba-u7M/hqdefault.jpg)](https://youtu.be/82-5Fba-u7M?is=xybhjEheeBoZ_1wf)
+Watch the demo video:
+
+[![Watch the demo video](https://img.youtube.com/vi/82-5Fba-u7M/maxresdefault.jpg)](https://youtu.be/82-5Fba-u7M?is=xybhjEheeBoZ_1wf)
 
 ## Feedback & Discussions
 
