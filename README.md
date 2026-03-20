@@ -1,90 +1,54 @@
-# Obsidian Sample Plugin
+# Task from Note Obsidian Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+A plugin for Obsidian that uses an AI model to turn selected text into a well‑structured task and automatically send it to TickTick. This lets you convert notes, thoughts, and ideas into actionable tasks in a single click, without manual copy‑paste or formatting.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## Key feature
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open modal (simple)" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+-   Turn any selected text in a note into a clear, structured task using an AI model
+-   Automatically create the task in TickTick with title and description
+-   One‑click flow from Obsidian note to TickTick task, without leaving the editor
+-   Models compatible with the OpenAI API
 
-## First time developing plugins?
+## Get started
 
-Quick starting guide for new plugin devs:
+1. **Installation**
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+-   Open Obsidian → Settings → Community plugins → Browse
+-   Search for "Task from Note"
+-   Click Install
+-   Click Enable
 
-## Releasing new releases
+2. **Minimal plugin setup**
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+Open Settings → Community plugins → Task from Note and configure:
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+-   TickTick access key (API token)
+-   Model parameters and access key (model name, base URL and API key)
 
-## Adding your plugin to the community plugin list
+> **NOTE**: The plugin does not store sensitive data in Obsidian storage. Instead, it uses the system secret storage provided by the Obsidian Plugin API, which varies by operating system (for example, Keyring on Linux). The plugin requests and uses these secrets only for generating and sending tasks to TickTick
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+To save a secret, enter a unique secret ID first, then paste the secret value.
+For example:
 
-## How to use
+-   ID: ticktick-access-key
+-   Secret: your TickTick API token
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+3. **Command and toolbar button**
 
-## Manually installing the plugin
+-   Use the Command Palette to run the main command **Create task from selection**
+-   Or use toolbar button for one‑click access from the editor
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+## Usage
 
-## Improve code quality with eslint
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- This project already has eslint preconfigured, you can invoke a check by running`npm run lint`
-- Together with a custom eslint [plugin](https://github.com/obsidianmd/eslint-plugin) for Obsidan specific code guidelines.
-- A GitHub action is preconfigured to automatically lint every commit on all branches.
+1. Select text in a note that you want to turn into a task (e.g., a sentence, bullet point, or paragraph)
+2. Run the command **Create task from selection** (via Command Palette or toolbar button)
+3. The system uses the configured model to generate a clear task title and description from the selected text
+4. The plugin automatically creates a task in TickTick (Inbox list) using the generated content
 
-## Funding URL
+This flow is ideal when you trust the model and want the fastest possible note‑to‑task conversion.
 
-You can include funding URLs where people who use your plugin can financially support it.
+[![Watch the demo video](https://img.youtube.com/vi/82-5Fba-u7M/hqdefault.jpg)](https://youtu.be/82-5Fba-u7M?is=xybhjEheeBoZ_1wf)
 
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+## Feedback & Discussions
 
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
-```
-
-If you have multiple URLs, you can also do:
-
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
-
-## API Documentation
-
-See https://docs.obsidian.md
+If you encounter bugs, have feature requests, or want to share ideas for improvements, please open a discussion in the plugin’s [Discussions section on its repository](https://github.com/masaskasa/task-from-note-obsidian-plugin/discussions). Include your operating system, Obsidian version, plugin version, and a short description of the steps that lead to the issue or suggestion.
