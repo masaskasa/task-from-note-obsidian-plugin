@@ -1,22 +1,30 @@
-version: '3'
+version: "3"
 
 vars:
-  VAULT_PATH: /home/user/Documents/test-task-from-notes-plugin/
-  PLUGIN_ID: task-from-note
-  BUILD_DIR: .
-  DEST_DIR: '{{.VAULT_PATH}}/.obsidian/plugins/{{.PLUGIN_ID}}'
+    VAULT_PATH: /home/user/Documents/test-task-from-notes-plugin/
+    PLUGIN_ID: task-from-note
+    BUILD_DIR: .
+    DEST_DIR: "{{.VAULT_PATH}}/.obsidian/plugins/{{.PLUGIN_ID}}"
 
 tasks:
-  copy:
-    desc: Copy plugin files to Obsidian vault
-    cmds:
-      - mkdir -p {{.DEST_DIR}}
-      - cp {{.BUILD_DIR}}/main.js {{.DEST_DIR}}/
-      - cp {{.BUILD_DIR}}/manifest.json {{.DEST_DIR}}/
-      - if [ -f {{.BUILD_DIR}}/styles.css ]; then cp {{.BUILD_DIR}}/styles.css {{.DEST_DIR}}/; fi
+    copy:
+        desc: Copy plugin files to Obsidian vault
+        cmds:
+            - mkdir -p {{.DEST_DIR}}
+            - cp {{.BUILD_DIR}}/main.js {{.DEST_DIR}}/
+            - cp {{.BUILD_DIR}}/manifest.json {{.DEST_DIR}}/
+            - if [ -f {{.BUILD_DIR}}/styles.css ]; then cp {{.BUILD_DIR}}/styles.css {{.DEST_DIR}}/; fi
 
-  dev:
-    desc: Build and copy plugin
-    deps: [copy]
-    cmds:
-      - npm run dev
+    dev:
+        desc: Build and copy plugin
+        deps: [copy]
+        cmds:
+            - npm run dev
+
+    zip:
+        desc: zip plugin files in destination
+        vars:
+            DEST: '{{.DEST | default "."}}'
+        cmds:
+            - mkdir -p "{{.DEST}}"
+            - zip "{{.DEST}}/task-from-note.zip" main.js manifest.json styles.css
