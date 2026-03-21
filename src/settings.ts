@@ -63,9 +63,9 @@ export class SettingTab extends PluginSettingTab {
 			.addComponent((el) =>
 				new SecretComponent(this.app, el)
 					.setValue(this.plugin.settings.ticktickAccessToken)
-					.onChange((value) => {
+					.onChange(async (value) => {
 						this.plugin.settings.ticktickAccessToken = value;
-						this.plugin.saveSettings();
+						await this.plugin.saveSettings();
 					})
 			);
 		tokenSetting.descEl.createEl("br");
@@ -111,9 +111,9 @@ export class SettingTab extends PluginSettingTab {
 			.addComponent((el) =>
 				new SecretComponent(this.app, el)
 					.setValue(this.plugin.settings.openaiApiKey)
-					.onChange((value) => {
+					.onChange(async (value) => {
 						this.plugin.settings.openaiApiKey = value;
-						this.plugin.saveSettings();
+						await this.plugin.saveSettings();
 					})
 			);
 	}

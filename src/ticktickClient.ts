@@ -39,7 +39,8 @@ export class TickTickClient {
 			throw new Error(`TickTick API error ${response.status}: ${text}`);
 		}
 
-		return response.json() as Promise<T>;
+		const data = response.json() as T;
+		return data;
 	}
 
 	async createTask(task: TickTickTaskInput): Promise<TickTickTaskResponse> {

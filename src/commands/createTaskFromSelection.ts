@@ -19,11 +19,11 @@ export class CreateTaskFromSelectionCommand {
 		this.plugin.addCommand({
 			id: "create-task-from-selection",
 			name: "Create task from selection",
-			editorCallback: (
+			editorCallback: async (
 				editor: Editor,
 				view: MarkdownView | MarkdownFileInfo
 			) => {
-				this.run(editor);
+				await this.run(editor);
 			},
 		});
 	}

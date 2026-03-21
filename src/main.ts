@@ -44,13 +44,18 @@ export default class TaskFromNotePlugin extends Plugin {
 
 		registerTaskPlusIcon();
 
-		this.addRibbonIcon("task-plus", "Create task from selection", () => {
-			const mdView = this.app.workspace.getActiveViewOfType(MarkdownView);
-			if (!mdView) return;
+		this.addRibbonIcon(
+			"task-plus",
+			"Create task from selection",
+			async () => {
+				const mdView =
+					this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (!mdView) return;
 
-			const editor = mdView.editor;
-			createTaskCommand.run(editor);
-		});
+				const editor = mdView.editor;
+				await createTaskCommand.run(editor);
+			}
+		);
 	}
 
 	onunload() {
