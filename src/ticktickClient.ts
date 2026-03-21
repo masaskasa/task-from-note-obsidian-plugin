@@ -39,7 +39,7 @@ export class TickTickClient {
 			throw new Error(`TickTick API error ${response.status}: ${text}`);
 		}
 
-		const data = response.json() as unknown as T;
+		const data = JSON.parse(response.text) as T;
 		return data;
 	}
 
