@@ -22,12 +22,12 @@ export class OpenAIClient {
 			throw: false,
 		});
 
-		console.log("[TaskFromNote] HTTP", response.status, "URL:", url);
-		console.log("[TaskFromNote] Request body:", options.body);
-		console.log("[TaskFromNote] Response text:", response.text);
+		console.debug("[TaskFromNote] HTTP", response.status, "URL:", url);
+		console.debug("[TaskFromNote] Request body:", options.body);
+		console.debug("[TaskFromNote] Response text:", response.text);
 
 		if (response.status >= 400) {
-			const text = await response.text;
+			const text = response.text;
 			console.error("[TaskFromNote] OpenAI error", response.status, text);
 			throw new Error(`OpenAI error ${response.status}: ${text}`);
 		}
@@ -35,7 +35,10 @@ export class OpenAIClient {
 		return response.json as Promise<T>;
 	}
 
-	async chat(prompt: string, systemPrompt: string): Promise<any> {
+	async chat(
+		prompt: string,
+		systemPrompt: string
+	): Promise<ChatCompletionResponse> {
 		const body = {
 			model: this.model,
 			messages: [
@@ -44,20 +47,30 @@ export class OpenAIClient {
 			],
 		};
 
-		const res = await this.request<any>("/chat/completions", {
-			method: "POST",
-			body: JSON.stringify(body),
-		});
+		const res = await this.request<ChatCompletionResponse>(
+			"/chat/completions",
+			{
+				method: "POST",
+				body: JSON.stringify(body),
+			}
+		);
 
-		console.log("[TaskFromNote] OpenAI response:", res);
+		console.debug("[TaskFromNote] OpenAI response:", res);
 
-		const content: string | undefined = res?.choices?.[0]?.message?.content;
-		if (!content) {
+		if (!res.choices?.[0]?.message?.content) {
 			throw new Error(
 				"[TaskFromNote] OpenAI response has no choices[0].message.content"
 			);
 		}
 
-		return content;
+		return res;
 	}
 }
+
+export type ChatCompletionResponse = {
+	choices?: Array<{
+		message?: {
+			content?: string;
+		};
+	}>;
+};

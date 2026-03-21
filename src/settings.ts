@@ -39,42 +39,50 @@ export class SettingTab extends PluginSettingTab {
 			text: "Note: ",
 		});
 		warningEl.createEl("span", {
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			text: "after changing these settings, use the Obsidian command ",
 		});
 		warningEl.createEl("strong", {
 			text: "Reload app without saving",
 		});
 		warningEl.createEl("span", {
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			text: " to fully apply changes",
 		});
 		containerEl.createEl("br");
 
-		containerEl.createEl("h2", { text: "TickTick Settings" });
+		// eslint-disable-next-line obsidianmd/ui/sentence-case
+		new Setting(containerEl).setName("TickTick").setHeading();
 
 		const tokenSetting = new Setting(containerEl)
-			.setName("TickTick Access Token")
+
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			.setName("TickTick access token")
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			.setDesc("Paste your TickTick API access token")
 			.addComponent((el) =>
 				new SecretComponent(this.app, el)
 					.setValue(this.plugin.settings.ticktickAccessToken)
-					.onChange((value) => {
+					.onChange(async (value) => {
 						this.plugin.settings.ticktickAccessToken = value;
-						this.plugin.saveSettings();
+						await this.plugin.saveSettings();
 					})
 			);
 		tokenSetting.descEl.createEl("br");
 		tokenSetting.descEl.createEl("a", {
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			text: "Video guide: how to get your TickTick API token",
 			href: "https://www.youtube.com/watch?v=4PERyNv8aYE",
 		});
 
-		containerEl.createEl("h2", { text: "Chat Model Settings" });
+		new Setting(containerEl).setName("Chat model").setHeading();
 
 		new Setting(containerEl)
-			.setName("Model Name")
+			.setName("Model name")
 			.setDesc("Set model name")
 			.addText((text) =>
 				text
+					// eslint-disable-next-line obsidianmd/ui/sentence-case
 					.setPlaceholder("e.g. gpt-4o")
 					.setValue(this.plugin.settings.openaiModel)
 					.onChange(async (value) => {
@@ -85,6 +93,7 @@ export class SettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Base URL")
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			.setDesc("Change if you using OpenAI‑compatible service")
 			.addText((text) =>
 				text
@@ -97,14 +106,14 @@ export class SettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("API Key")
+			.setName("API key")
 			.setDesc("Enter API key")
 			.addComponent((el) =>
 				new SecretComponent(this.app, el)
 					.setValue(this.plugin.settings.openaiApiKey)
-					.onChange((value) => {
+					.onChange(async (value) => {
 						this.plugin.settings.openaiApiKey = value;
-						this.plugin.saveSettings();
+						await this.plugin.saveSettings();
 					})
 			);
 	}

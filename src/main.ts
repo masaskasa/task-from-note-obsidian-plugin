@@ -11,7 +11,7 @@ export default class TaskFromNotePlugin extends Plugin {
 	openai?: OpenAIClient;
 
 	async onload() {
-		console.log("[TaskFromNote] loading plugin");
+		console.debug("[TaskFromNote] loading plugin");
 
 		await this.loadSettings();
 
@@ -44,17 +44,22 @@ export default class TaskFromNotePlugin extends Plugin {
 
 		registerTaskPlusIcon();
 
-		this.addRibbonIcon("task-plus", "Create task from selection", () => {
-			const mdView = this.app.workspace.getActiveViewOfType(MarkdownView);
-			if (!mdView) return;
+		this.addRibbonIcon(
+			"task-plus",
+			"Create task from selection",
+			async () => {
+				const mdView =
+					this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (!mdView) return;
 
-			const editor = mdView.editor;
-			createTaskCommand.run(editor);
-		});
+				const editor = mdView.editor;
+				await createTaskCommand.run(editor);
+			}
+		);
 	}
 
 	onunload() {
-		console.log("[TaskFromNote] unloading plugin");
+		console.debug("[TaskFromNote] unloading plugin");
 	}
 
 	async loadSettings() {
