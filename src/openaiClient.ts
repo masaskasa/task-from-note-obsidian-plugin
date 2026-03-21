@@ -22,9 +22,9 @@ export class OpenAIClient {
 			throw: false,
 		});
 
-		console.log("[TaskFromNote] HTTP", response.status, "URL:", url);
-		console.log("[TaskFromNote] Request body:", options.body);
-		console.log("[TaskFromNote] Response text:", response.text);
+		console.debug("[TaskFromNote] HTTP", response.status, "URL:", url);
+		console.debug("[TaskFromNote] Request body:", options.body);
+		console.debug("[TaskFromNote] Response text:", response.text);
 
 		if (response.status >= 400) {
 			const text = await response.text;
@@ -49,7 +49,7 @@ export class OpenAIClient {
 			body: JSON.stringify(body),
 		});
 
-		console.log("[TaskFromNote] OpenAI response:", res);
+		console.debug("[TaskFromNote] OpenAI response:", res);
 
 		const content: string | undefined = res?.choices?.[0]?.message?.content;
 		if (!content) {

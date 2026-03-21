@@ -11,7 +11,7 @@ export default class TaskFromNotePlugin extends Plugin {
 	openai?: OpenAIClient;
 
 	async onload() {
-		console.log("[TaskFromNote] loading plugin");
+		console.debug("[TaskFromNote] loading plugin");
 
 		await this.loadSettings();
 
@@ -54,7 +54,7 @@ export default class TaskFromNotePlugin extends Plugin {
 	}
 
 	onunload() {
-		console.log("[TaskFromNote] unloading plugin");
+		console.debug("[TaskFromNote] unloading plugin");
 	}
 
 	async loadSettings() {

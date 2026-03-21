@@ -46,7 +46,7 @@ export class TickTickClient {
 			body: JSON.stringify(body),
 		});
 
-		console.log("[TaskFromNote] TickTick createTask response:", res);
+		console.debug("[TaskFromNote] TickTick createTask response:", res);
 		return res;
 	}
 }
