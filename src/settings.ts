@@ -39,6 +39,7 @@ export class SettingTab extends PluginSettingTab {
 			text: "Note: ",
 		});
 		warningEl.createEl("span", {
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			text: "after changing these settings, use the Obsidian command ",
 		});
 		warningEl.createEl("strong", {
@@ -49,10 +50,13 @@ export class SettingTab extends PluginSettingTab {
 		});
 		containerEl.createEl("br");
 
-		containerEl.createEl("h2", { text: "TickTick Settings" });
+		// eslint-disable-next-line obsidianmd/ui/sentence-case
+		new Setting(containerEl).setName("TickTick settings").setHeading();
 
 		const tokenSetting = new Setting(containerEl)
-			.setName("TickTick Access Token")
+
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			.setName("TickTick access token")
 			.setDesc("Paste your TickTick API access token")
 			.addComponent((el) =>
 				new SecretComponent(this.app, el)
@@ -68,7 +72,7 @@ export class SettingTab extends PluginSettingTab {
 			href: "https://www.youtube.com/watch?v=4PERyNv8aYE",
 		});
 
-		containerEl.createEl("h2", { text: "Chat Model Settings" });
+		new Setting(containerEl).setName("Chat model settings").setHeading();
 
 		new Setting(containerEl)
 			.setName("Model Name")
