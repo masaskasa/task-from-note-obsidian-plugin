@@ -52,7 +52,7 @@ export class SettingTab extends PluginSettingTab {
 		containerEl.createEl("br");
 
 		// eslint-disable-next-line obsidianmd/ui/sentence-case
-		new Setting(containerEl).setName("TickTick settings").setHeading();
+		new Setting(containerEl).setName("TickTick").setHeading();
 
 		const tokenSetting = new Setting(containerEl)
 
@@ -75,13 +75,14 @@ export class SettingTab extends PluginSettingTab {
 			href: "https://www.youtube.com/watch?v=4PERyNv8aYE",
 		});
 
-		new Setting(containerEl).setName("Chat model settings").setHeading();
+		new Setting(containerEl).setName("Chat model").setHeading();
 
 		new Setting(containerEl)
-			.setName("Model Name")
+			.setName("Model name")
 			.setDesc("Set model name")
 			.addText((text) =>
 				text
+					// eslint-disable-next-line obsidianmd/ui/sentence-case
 					.setPlaceholder("e.g. gpt-4o")
 					.setValue(this.plugin.settings.openaiModel)
 					.onChange(async (value) => {
@@ -92,6 +93,7 @@ export class SettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Base URL")
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			.setDesc("Change if you using OpenAI‑compatible service")
 			.addText((text) =>
 				text
