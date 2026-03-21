@@ -27,7 +27,7 @@ export class OpenAIClient {
 		console.debug("[TaskFromNote] Response text:", response.text);
 
 		if (response.status >= 400) {
-			const text = await response.text;
+			const text = response.text;
 			console.error("[TaskFromNote] OpenAI error", response.status, text);
 			throw new Error(`OpenAI error ${response.status}: ${text}`);
 		}

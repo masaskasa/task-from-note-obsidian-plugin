@@ -46,6 +46,7 @@ export class SettingTab extends PluginSettingTab {
 			text: "Reload app without saving",
 		});
 		warningEl.createEl("span", {
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			text: " to fully apply changes",
 		});
 		containerEl.createEl("br");
@@ -57,6 +58,7 @@ export class SettingTab extends PluginSettingTab {
 
 			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			.setName("TickTick access token")
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			.setDesc("Paste your TickTick API access token")
 			.addComponent((el) =>
 				new SecretComponent(this.app, el)
@@ -68,6 +70,7 @@ export class SettingTab extends PluginSettingTab {
 			);
 		tokenSetting.descEl.createEl("br");
 		tokenSetting.descEl.createEl("a", {
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			text: "Video guide: how to get your TickTick API token",
 			href: "https://www.youtube.com/watch?v=4PERyNv8aYE",
 		});
