@@ -1,3 +1,5 @@
+import { requestUrl } from "obsidian";
+
 const TICKTICK_API_BASE = "https://api.ticktick.com/open/v1";
 
 export interface TickTickTaskInput {
@@ -12,17 +14,23 @@ export class TickTickClient {
 	private async request<T>(path: string, options: RequestInit): Promise<T> {
 		const url = `${TICKTICK_API_BASE}${path}`;
 
-		const response = await fetch(url, {
-			...options,
+		const response = await requestUrl({
+			url,
+			method: options.method ?? "GET",
+			body: options.body as string | ArrayBuffer | Uint8Array | undefined,
 			headers: {
 				Authorization: `Bearer ${this.accessToken}`,
 				"Content-Type": "application/json",
-				...(options.headers || {}),
+				...(options.headers as Record<string, string> | undefined),
 			},
 		});
 
-		if (!response.ok) {
-			const text = await response.text();
+		console.debug("[TaskFromNote] HTTP", response.status, "URL:", url);
+		console.debug("[TaskFromNote] Request body:", options.body);
+		console.debug("[TaskFromNote] Response text:", response.text);
+
+		if (response.status >= 400) {
+			const text = response.text;
 			console.error(
 				"[TaskFromNote] TickTick API error",
 				response.status,
@@ -34,14 +42,14 @@ export class TickTickClient {
 		return response.json() as Promise<T>;
 	}
 
-	async createTask(task: TickTickTaskInput): Promise<any> {
+	async createTask(task: TickTickTaskInput): Promise<TickTickTaskResponse> {
 		const body = {
 			title: task.title,
 			content: task.content ?? "",
 			projectId: task.projectId ?? "",
 		};
 
-		const res = await this.request<any>("/task", {
+		const res = await this.request<TickTickTaskResponse>("/task", {
 			method: "POST",
 			body: JSON.stringify(body),
 		});
@@ -50,3 +58,10 @@ export class TickTickClient {
 		return res;
 	}
 }
+
+type TickTickTaskResponse = {
+	id?: string;
+	title?: string;
+	content?: string;
+	projectId?: string;
+};

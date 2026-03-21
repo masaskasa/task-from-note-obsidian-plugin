@@ -6,7 +6,7 @@ import {
 	Notice,
 } from "obsidian";
 import { TickTickClient } from "ticktickClient";
-import { OpenAIClient } from "openaiClient";
+import { OpenAIClient, ChatCompletionResponse } from "openaiClient";
 
 export class CreateTaskFromSelectionCommand {
 	constructor(
@@ -53,7 +53,7 @@ export class CreateTaskFromSelectionCommand {
 			return;
 		}
 
-		let aiResponse: string;
+		let aiResponse: ChatCompletionResponse;
 
 		try {
 			// eslint-disable-next-line obsidianmd/ui/sentence-case
@@ -90,8 +90,19 @@ export class CreateTaskFromSelectionCommand {
 		}
 
 		let taskData: { title: string; description: string };
+
+		const content = aiResponse.choices?.[0]?.message?.content;
+		if (!content) {
+			throw new Error(
+				"[TaskFromNote] OpenAI response has no message content"
+			);
+		}
+
 		try {
-			taskData = JSON.parse(aiResponse);
+			taskData = JSON.parse(content) as {
+				title: string;
+				description: string;
+			};
 			console.debug("[TaskFromNote] parsed AI task:", taskData);
 		} catch (e) {
 			console.error("[TaskFromNote] failed to parse AI JSON:", e);

@@ -106,7 +106,7 @@ export class SettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("API Key")
+			.setName("API key")
 			.setDesc("Enter API key")
 			.addComponent((el) =>
 				new SecretComponent(this.app, el)

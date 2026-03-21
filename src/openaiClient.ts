@@ -35,7 +35,10 @@ export class OpenAIClient {
 		return response.json as Promise<T>;
 	}
 
-	async chat(prompt: string, systemPrompt: string): Promise<string> {
+	async chat(
+		prompt: string,
+		systemPrompt: string
+	): Promise<ChatCompletionResponse> {
 		const body = {
 			model: this.model,
 			messages: [
@@ -54,18 +57,17 @@ export class OpenAIClient {
 
 		console.debug("[TaskFromNote] OpenAI response:", res);
 
-		const content = res.choices?.[0]?.message?.content;
-		if (!content) {
+		if (!res.choices?.[0]?.message?.content) {
 			throw new Error(
 				"[TaskFromNote] OpenAI response has no choices[0].message.content"
 			);
 		}
 
-		return content;
+		return res;
 	}
 }
 
-type ChatCompletionResponse = {
+export type ChatCompletionResponse = {
 	choices?: Array<{
 		message?: {
 			content?: string;
