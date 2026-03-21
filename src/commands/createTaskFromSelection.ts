@@ -108,6 +108,7 @@ export class CreateTaskFromSelectionCommand {
 			new Notice("Task created in TickTick");
 		} catch (e) {
 			console.error("[TaskFromNote] TickTick createTask error", e);
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			new Notice("Failed to create TickTick task, see console");
 		}
 	}
