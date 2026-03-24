@@ -39,26 +39,26 @@ export class SettingTab extends PluginSettingTab {
 			text: "Note: ",
 		});
 		warningEl.createEl("span", {
-			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			// eslint-disable-next-line obsidianmd/ui/sentence-case -- This text is intentionally lowercase as it continues the sentence started by "Note: ". The full sentence structure requires lowercase continuation.
 			text: "after changing these settings, use the Obsidian command ",
 		});
 		warningEl.createEl("strong", {
-			text: "Reload app without saving",
+			text: "Reload app without saving", // This is an exact Obsidian command name that must preserve its original capitalization
 		});
 		warningEl.createEl("span", {
-			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			// eslint-disable-next-line obsidianmd/ui/sentence-case -- This text is intentionally lowercase as it completes the sentence. Making it sentence case would break the grammatical flow.
 			text: " to fully apply changes",
 		});
 		containerEl.createEl("br");
 
-		// eslint-disable-next-line obsidianmd/ui/sentence-case
+		// eslint-disable-next-line obsidianmd/ui/sentence-case -- "TickTick" is a third-party service name that must preserve its original capitalization (TickTick, not Ticktick).
 		new Setting(containerEl).setName("TickTick").setHeading();
 
 		const tokenSetting = new Setting(containerEl)
 
-			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			// eslint-disable-next-line obsidianmd/ui/sentence-case -- "TickTick" is a third-party service name that must preserve its original capitalization (TickTick, not Ticktick).
 			.setName("TickTick access token")
-			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			// eslint-disable-next-line obsidianmd/ui/sentence-case -- "TickTick" is a third-party service name that must preserve its original capitalization (TickTick, not Ticktick).
 			.setDesc("Paste your TickTick API access token")
 			.addComponent((el) =>
 				new SecretComponent(this.app, el)
@@ -70,7 +70,7 @@ export class SettingTab extends PluginSettingTab {
 			);
 		tokenSetting.descEl.createEl("br");
 		tokenSetting.descEl.createEl("a", {
-			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			// eslint-disable-next-line obsidianmd/ui/sentence-case -- "TickTick" is a third-party service name that must preserve its original capitalization (TickTick, not Ticktick).
 			text: "Video guide: how to get your TickTick API token",
 			href: "https://www.youtube.com/watch?v=4PERyNv8aYE",
 		});
@@ -82,8 +82,8 @@ export class SettingTab extends PluginSettingTab {
 			.setDesc("Set model name")
 			.addText((text) =>
 				text
-					// eslint-disable-next-line obsidianmd/ui/sentence-case
-					.setPlaceholder("e.g. gpt-4o")
+					// eslint-disable-next-line obsidianmd/ui/sentence-case -- "GPT-4o" is the official OpenAI model name, must preserve original capitalization.
+					.setPlaceholder("GPT-4o")
 					.setValue(this.plugin.settings.openaiModel)
 					.onChange(async (value) => {
 						this.plugin.settings.openaiModel = value.trim();
@@ -93,7 +93,7 @@ export class SettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Base URL")
-			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			// eslint-disable-next-line obsidianmd/ui/sentence-case -- This description contains "OpenAI‑compatible" which is a technical term that should preserve its hyphenation and capitalization.
 			.setDesc("Change if you using OpenAI‑compatible service")
 			.addText((text) =>
 				text
